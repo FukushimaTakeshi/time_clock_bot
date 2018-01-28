@@ -13,21 +13,24 @@ module Bot
       p @memory
 
       if @memory.blank?
-        apiAi = Bot::Flow::Base.parse_intent(event)
+        parsed_intent = Bot::Flow::Base.parse_intent(event)
         @memory = {
-          intent: apiAi[:result],
-          confirmed: {},
-          to_confirme: {},
-          confirming: nil,
+          intent: parsed_intent[:result], # メッセージをDialogflowにpostし 抽出された意図 ex.'register' or 'show'
+          confirmed: {}, # 確認済みのslot
+          to_confirme: {}, # 確認するslot
+          confirming: nil, # 現在確認中のslot
           verified: {
             confirmed: []
           }
         }
         # "First"
+        # 初期状態 1.意図を抽出 2.slotを回収 3.すべてのslotを回収できれば最終解答、出来なければ確認メッセージ返答
         bot_flow = Bot::Flow::First.new(event, @memory)
         messages = bot_flow.run
 
-      else  # "Reply"
+      else
+        # "Reply"
+        # 確認中のslotがある状態 1.メッセージからslotを回収 2.すべてを回収できれば最終解答、出来なければ確認メッセージ返答
         if @memory[:confirming].present?
           bot_flow = Bot::Flow::Reply.new(event, @memory)
           messages = bot_flow.run
@@ -36,16 +39,23 @@ module Bot
           apiAi = Bot::Flow::Base.parse_intent(event)
           if apiAi.dig(:result, :action) != 'input.unknown'
             @memory[:intent] = apiAi[:result]
-            # "First"
+
+            # Change intent
+            # 一度、最終返答済みの状態から意図が変更された状態
+            # Firstと同様だが、収集したパラメータを継承している
             bot_flow = Bot::Flow::First.new(event, @memory)
             messages = bot_flow.run
 
-          else # "Change Slot"
+          else
+            # "Change Slot"
+            # 一度、最終返答済みの状態からslotが変更された状態
             if @memory[:verified][:confirmed].present?
               bot_flow = Bot::Flow::ChangeSlot.new(event, @memory)
               messages = bot_flow.run
 
-            else # "Other"
+            else
+              # "Other"
+              # 一度、最終返答済みであが、上記のflowのどれにも当てはまらない場合
               @memory = {
                 intent: apiAi[:result],
                 confirmed: {},
@@ -61,9 +71,7 @@ module Bot
           end
         end
       end
-      # 'memory regist'
-      p 'cache write!!!'
-      p Rails.cache.write(line_user_id, @memory, expired_in: 30.seconds)
+      Rails.cache.write(line_user_id, @memory, expired_in: 30.seconds)
       # Redis.current.setex(line_user_id, 30, @memory.to_json)
       messages
     end

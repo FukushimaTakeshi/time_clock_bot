@@ -19,7 +19,7 @@ module Bot
         action = 'other' if action == 'input.unknown'
         require "#{Rails.application.config.autoload_paths[0].to_s}/bot/plugins/#{action}.rb"
         # classname = "#{action}"
-        Object.const_get("#{action}".capitalize!).new
+        Object.const_get("#{action}".camelize).new
       end
 
       def confirm_slot(confirmed)
@@ -50,6 +50,7 @@ module Bot
         api_ai_ruby.text_request(text)
       end
 
+      # メッセージに含まれるslot(パラメータ)を抽出する
       def filtering_slot(key, value, change_intent = false)
         if @bot_plugin.required_slot.has_key?(key.to_sym)
           parsed_value = if @bot_plugin.respond_to?("parser_#{key}")
@@ -79,6 +80,8 @@ module Bot
       end
 
       def create_message
+        p '----create_message-------------'
+        p @memory[:to_confirme].values[0]
         return collect_slot if @memory[:to_confirme].values[0].present?
         @bot_plugin.create_message(@memory)
       end
