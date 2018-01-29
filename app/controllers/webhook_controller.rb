@@ -33,6 +33,15 @@ class WebhookController < ApplicationController
         else
           p '新規登録'
           user.create_activation_digest
+
+          response = client.get_profile(line_user_id)
+          # byebug
+          case response
+          when Net::HTTPSuccess
+            contact = JSON.parse(response.body)
+            user.update_line_display_name(contact['displayName'])
+          end
+          p edit_account_activation_url(user.activation_token, id: line_user_id)
           messages = {
             type: 'text',
             text: "このURLからユーザー登録して下さい\n#{edit_account_activation_url(user.activation_token, id: line_user_id)}"

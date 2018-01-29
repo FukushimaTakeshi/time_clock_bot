@@ -34,6 +34,10 @@ class User < ApplicationRecord
     self.activation_token = Base64.urlsafe_encode64(User.new_token + self.line_user_id)
     update_attribute(:activation_digest, User.digest(activation_token))
   end
+
+  def update_line_display_name(line_display_name)
+    update_columns(line_display_name: line_display_name)
+  end
 end
 
 # Base64.urlsafe_encode64(BCrypt::Password.create('U11dcf2ab1d8608c6ae6c837d5255cf1f'))
