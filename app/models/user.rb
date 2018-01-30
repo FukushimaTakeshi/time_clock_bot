@@ -17,10 +17,22 @@ class User < ApplicationRecord
     SecureRandom.uuid
   end
 
+  # 永続セッションのためにユーザーをデータベースに記憶する
+  def remember
+    self.remember_token = User.new_token
+    update_attribute(:remember_digest, User.digest(remember_token))
+  end
+
   # トークンがダイジェストと一致したらtrueを返す
-  def authenticated?(token)
-    return false if activation_digest.nil?
-    BCrypt::Password.new(activation_digest).is_password?(token)
+  def authenticated?(attribute, token)
+    digest = send("#{attribute}_digest")
+    return false if digest.nil?
+    BCrypt::Password.new(digest).is_password?(token)
+  end
+
+  # ユーザーのログイン情報を破棄する
+  def forget
+    update_attribute(:remember_digest, nil)
   end
 
   # アカウントを有効にする

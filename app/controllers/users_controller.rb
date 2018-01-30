@@ -17,7 +17,7 @@ class UsersController < ApplicationController
   def edit
     logged_in_user
     current_user
-    @user = User.find(session[:user_id])
+    @user = User.find_by(id: session[:user_id])
   end
 
   private
@@ -49,7 +49,7 @@ class UsersController < ApplicationController
     unless logged_in?
       store_location
       flash[:danger] = "Please log in."
-      # redirect_to root_url
+      redirect_to root_url
       # TODO: LINEからもう一度登録用URLを発行する
     end
   end
