@@ -9,4 +9,6 @@ Rails.application.routes.draw do
 
   resources :users
   resources :account_activations, param: :token, only: [:edit]
+
+  get '*unmatched_route', to: 'application#render_404'
 end

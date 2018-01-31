@@ -3,7 +3,19 @@ require 'line/bot'
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :null_session
 
-  # before_action :validate_signature
+  unless Rails.env.development?
+    rescue_from StandardError, with: :render_404
+    rescue_from Exception, with: :render_500
+    rescue_from ActiveRecord::RecordNotFound, with: :render_404
+  end
+
+  def render_404
+    render file: Rails.root.join('public/404.html'), status: 404, layout: false, content_type: 'text/html'
+  end
+
+  def render_500
+    render file: Rails.root.join('public/500.html'), status: 500, layout: false, content_type: 'text/html'
+  end
 
   def validate_signature
     body = request.body.read
