@@ -7,6 +7,11 @@ gem 'redis-rails'
 gem 'line-bot-api'
 gem 'api-ai-ruby'
 
+gem 'bootstrap', '~> 4.0.0'
+gem 'jquery-rails'
+
+gem 'therubyracer', platforms: :ruby
+
 group :production do
   gem 'pg', '0.18.4'
 end
