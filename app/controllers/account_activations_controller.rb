@@ -1,4 +1,5 @@
 class AccountActivationsController < ApplicationController
+  include UserHandler
 
   def edit
     user = User.find_by(line_user_id: params[:id])
@@ -9,24 +10,12 @@ class AccountActivationsController < ApplicationController
       log_in user
       flash[:success] = "Account activated!"
       # redirect_to user_url
-      redirect_to controller: :users, action: :edit
+      redirect_to controller: :users, action: :new, id: user.id
     else
       # token改ざん or 新しいtokenが発行されている
       flash[:danger] = "Invalid activation link"
       redirect_to root_url
     end
-  end
-
-  private
-
-  def log_in(user)
-    session[:user_id] = user.id
-  end
-
-  def remember(user)
-    user.remember
-    cookies.permanent.signed[:user_id] = user.id
-    cookies.permanent[:remember_token] = user.remember_token
   end
 
 end

@@ -1,8 +1,6 @@
 class User < ApplicationRecord
   attr_accessor :remember_token, :activation_token
 
-  # before_create :create_activation_digest
-
   validates :user_id, presence: true, length: { is: 9 }
   validates :password, presence: true
 

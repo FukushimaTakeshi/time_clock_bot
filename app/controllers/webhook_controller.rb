@@ -27,8 +27,8 @@ class WebhookController < ApplicationController
       # when Line::Bot::Event::MessageType::Text
         # TODO:勤怠登録
         user = User.find_by(line_user_id: line_user_id)
-        if user.user_id || user.password
-          P '登録済み'
+        if user.user_id.present? || user.password.present?
+          p '登録済み'
           messages = flow(line_user_id).flow(event)
         else
           p '新規登録'
