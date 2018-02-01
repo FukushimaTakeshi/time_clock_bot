@@ -1,34 +1,50 @@
 <% provide(:title, 'Sign up') %>
-<h1>Sign up</h1>
 
-<div class="row">
-  <div class="col-md-6 col-md-offset-3">
+
+<div class="container">
+  <div class="pt-5 pb-5">
+    <div class="p-3 pt-5">
+      <h1>Sing up</h1>
+    </div>
+    <div class="alert alert-info p-3" role="alert">
+      <h4 class="alert-heading">
+        <%= @user.line_display_name %>さん
+      </h4>
+      <hr>
+      <div>
+        <p>CHRONUSのユーザーIDとパスワードを登録してね。</p>
+      </div>
+    </div>
     <%= form_for(@user, url: signup_path) do |f| %>
 
-      <% if @user.errors.any? %>
-        <div id="error_explanation">
-          <div class="alert alert-danger">
-            The form contains <%= pluralize(@user.errors.count, "error") %>.
+      <div class="d-flex flex-column">
+
+        <% if @user.errors.any? %>
+          <div id="error_explanation">
+            <div class="alert alert-danger">
+              The form contains <%= pluralize(@user.errors.count, "error") %>.
+            </div>
+            <ul>
+            <% @user.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+            </ul>
           </div>
-          <ul>
-          <% @user.errors.full_messages.each do |msg| %>
-            <li><%= msg %></li>
-          <% end %>
-          </ul>
+        <% end %>
+
+        <div class="input-field">
+          <%= f.label :user_id %>
+          <%= f.text_field :user_id, class: 'form-control' %>
+
+          <%= f.label :password %>
+          <%= f.password_field :password, class: 'form-control' %>
+
+          <div class="text-center">
+            <%= f.submit "登 録", class: "btn btn-primary  btn-lg m-5 w-50" %>
+          </div>
         </div>
-      <% end %>
-
-      <div>
-        <%= @user.line_display_name %>
       </div>
-
-      <%= f.label :user_id %>
-      <%= f.text_field :user_id, class: 'form-control' %>
-
-      <%= f.label :password %>
-      <%= f.password_field :password, class: 'form-control' %>
-
-      <%= f.submit "Create my account", class: "btn btn-primary" %>
     <% end %>
+
   </div>
 </div>

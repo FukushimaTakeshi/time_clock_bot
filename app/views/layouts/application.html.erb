@@ -6,9 +6,25 @@
 
     <%= stylesheet_link_tag    'application', media: 'all' %>
     <%= javascript_include_tag 'application' %>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   </head>
 
+
   <body>
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-info fixed-top">
+        <a href="" class="navbar-brand">くろのす hack</a>
+        <button class="navbar-toggler" data-toggle="collapse" data-target="#menu">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div id="menu" class="collapse navbar-collapse">
+          <ul class="navbar-nav">
+            <li class="nav-item"><a href="" class="nav-link">パスワード変更</a></li>
+            <li class="nav-item"><a href="" class="nav-link">アカウント削除</a></li>
+          </ul>
+        </div>
+      </nav>
+    </header>
     <%= yield %>
   </body>
 </html>
