@@ -1,4 +1,11 @@
 module UserHandler
+  extend ActiveSupport::Concern
+
+  included do
+    helper_method :logged_in?
+    helper_method :current_user
+  end
+
   def user_params
     params.require(:user).permit(
       :user_id,

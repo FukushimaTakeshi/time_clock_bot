@@ -19,12 +19,21 @@
         </button>
         <div id="menu" class="collapse navbar-collapse">
           <ul class="navbar-nav">
-            <li class="nav-item"><a href="" class="nav-link">パスワード変更</a></li>
-            <li class="nav-item"><a href="" class="nav-link">アカウント削除</a></li>
+            <% if logged_in? %>
+              <li><%= link_to "ユーザー登録", update_signup_path(current_user), class: "nav-link" %></li>
+              <!--TODO: ID/PWがnot nil -->
+              <li class="nav-item"><a href="" class="nav-link">パスワード変更</a></li>
+              <li class="nav-item"><a href="" class="nav-link">アカウント削除</a></li>
+            <% end %>
           </ul>
         </div>
       </nav>
     </header>
-    <%= yield %>
+    <div class="container">
+      <% flash.each do |message_type, message| %>
+          <%= content_tag(:div, message, class: "alert alert-#{message_type}") %>
+        <% end %>
+      <%= yield %>
+    </div>
   </body>
 </html>
