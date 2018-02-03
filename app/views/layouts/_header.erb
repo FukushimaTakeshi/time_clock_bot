@@ -1,0 +1,20 @@
+<header>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-info fixed-top">
+    <%= link_to 'くろのす hack', root_url, class: 'navbar-brand' %>
+    <button class="navbar-toggler" data-toggle="collapse" data-target="#menu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div id="menu" class="collapse navbar-collapse">
+      <ul class="navbar-nav">
+        <% if logged_in? %>
+          <% if current_user.user_id.blank? || current_user.password.blank? %>
+            <li><%= link_to 'ユーザー登録', update_signup_path(current_user), class: 'nav-link' %></li>
+          <% else %>
+            <li><%= link_to '登録内容変更', update_signup_path(current_user), class: 'nav-link' %></li>
+            <li><%= link_to 'アカウント削除', update_signup_path(current_user), class: 'nav-link' %></li>
+          <% end %>
+        <% end %>
+      </ul>
+    </div>
+  </nav>
+</header>

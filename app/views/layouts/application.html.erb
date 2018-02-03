@@ -9,26 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   </head>
 
-
   <body>
-    <header>
-      <nav class="navbar navbar-expand-lg navbar-dark bg-info fixed-top">
-        <a href="" class="navbar-brand">くろのす hack</a>
-        <button class="navbar-toggler" data-toggle="collapse" data-target="#menu">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div id="menu" class="collapse navbar-collapse">
-          <ul class="navbar-nav">
-            <% if logged_in? %>
-              <li><%= link_to "ユーザー登録", update_signup_path(current_user), class: "nav-link" %></li>
-              <!--TODO: ID/PWがnot nil -->
-              <li class="nav-item"><a href="" class="nav-link">パスワード変更</a></li>
-              <li class="nav-item"><a href="" class="nav-link">アカウント削除</a></li>
-            <% end %>
-          </ul>
-        </div>
-      </nav>
-    </header>
+    <%= render 'layouts/header' %>
     <div class="container">
       <% flash.each do |message_type, message| %>
           <%= content_tag(:div, message, class: "alert alert-#{message_type}") %>
