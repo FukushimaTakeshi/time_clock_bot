@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
   include UserHandler
 
-  before_action :logged_in_user, only: [:show, :new, :update]
-  before_action :correct_user, only: [:show, :new, :update]
+  before_action :logged_in_user
+  before_action :correct_user
 
   def show
     @user = User.find(params[:id])
@@ -22,6 +22,12 @@ class UsersController < ApplicationController
     end
   end
 
+  def destroy
+    User.find(params[:id]).destroy
+    flash[:success] = "User deleted"
+    redirect_to root_url
+  end
+
   private
 
   # 正しいユーザーかどうか確認
@@ -29,7 +35,4 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     redirect_to(root_url) unless current_user?(@user)
   end
-
-
-
 end

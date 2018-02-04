@@ -1,8 +1,8 @@
 class User < ApplicationRecord
   attr_accessor :remember_token, :activation_token
 
-  validates :user_id, presence: true, length: { is: 9 }
-  validates :password, presence: true
+  validates :user_id, presence: true, length: { is: 9 }, on: :update
+  validates :password, presence: true, on: :update
 
   # 渡された文字列のハッシュ値を返す
   def self.digest(string)
