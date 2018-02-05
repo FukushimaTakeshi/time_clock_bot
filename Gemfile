@@ -10,6 +10,8 @@ gem 'api-ai-ruby'
 gem 'bootstrap', '~> 4.0.0'
 gem 'jquery-rails'
 
+gem 'webpacker', github: 'rails/webpacker'
+
 gem 'therubyracer', platforms: :ruby
 
 group :production do
