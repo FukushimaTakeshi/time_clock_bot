@@ -14,36 +14,39 @@
       <p>CHRONUSのユーザーIDとパスワードを登録してね。</p>
     </div>
   </div>
+  <div id="user-form" v-cloak>
     <%= form_for(@user, url: update_signup_path) do |f| %>
 
-    <div class="d-flex flex-column">
-    <form class="form-inline">
-      <% if @user.errors.any? %>
-        <div id="error_explanation">
-          <div class="alert alert-danger">
-            The form contains <%= pluralize(@user.errors.count, "error") %>.
-          </div>
-          <ul>
-          <% @user.errors.full_messages.each do |msg| %>
-            <li><%= msg %></li>
+      <div class="d-flex flex-column">
+        <form class="form-inline">
+          <% if @user.errors.any? %>
+            <div id="error_explanation">
+              <div class="alert alert-danger">
+                The form contains <%= pluralize(@user.errors.count, "error") %>.
+              </div>
+              <ul>
+              <% @user.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+              <% end %>
+              </ul>
+            </div>
           <% end %>
-          </ul>
-        </div>
-      <% end %>
 
-      <div class="input-field">
-        <%= f.label :user_id %>
-        <%= f.text_field :user_id, placeholder: 'TIE999999', class: 'form-control' %>
+          <div class="input-field">
+            <%= f.label :user_id %>
+            <%= f.text_field :user_id, placeholder: 'TIE999999', class: 'form-control', 'v-model' => 'user.id' %>
 
-        <%= f.label :password %>
-        <%= f.password_field :password, placeholder: '********', class: 'form-control' %>
+            <%= f.label :password %>
+            <%= f.password_field :password, placeholder: '********', class: 'form-control', 'v-model' => 'user.password' %>
 
-        <div class="text-center">
-          <%= f.submit "登 録", class: "btn btn-primary  btn-lg m-5 w-50" %>
-        </div>
+            <div class="text-center">
+              <%= f.submit "登 録", class: "btn btn-primary  btn-lg m-5 w-50" %>
+            </div>
+          </div>
+        </form>
       </div>
-    </form>
-    </div>
-  <% end %>
-
+    <% end %>
+  </div>
 </div>
+
+<%= javascript_pack_tag "users/form" %>
