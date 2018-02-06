@@ -11,6 +11,7 @@ gem 'bootstrap', '~> 4.0.0'
 gem 'jquery-rails'
 
 gem 'webpacker', github: 'rails/webpacker'
+gem 'foreman'
 
 gem 'therubyracer', platforms: :ruby
 
