@@ -16,6 +16,7 @@
         <%= content_tag(:div, message, class: "alert alert-#{message_type}") %>
       <% end %>
     <%= yield %>
+    <%= javascript_pack_tag 'hello_vue' %>
     </div>
   </body>
 </html>
