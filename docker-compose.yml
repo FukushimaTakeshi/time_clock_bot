@@ -1,0 +1,26 @@
+version: '2'
+services:
+  web:
+    build: .
+    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    volumes:
+      - .:/app
+      - bundle_install:/app/vender/bundle
+      - bundle:/app/.bundle
+      - node_modules:/app/node_modules
+    ports:
+      - "3000:3000"
+    volumes_from:
+      - bundle
+
+  bundle:
+    image: "busybox"
+    volumes:
+      - "/usr/local/bundle"
+
+volumes:
+  bundle_install:
+    driver: local
+  bundle:
+    driver: local
+  node_modules:
