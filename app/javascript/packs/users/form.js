@@ -5,9 +5,26 @@ document.addEventListener("DOMContentLoaded", () => {
     el: "#user-form",
     data: {
       user: {
-        id: "test",
-        password: undefined
+        id: document.querySelector("[v-model='user.id']").value,
+        password: document.querySelector("[v-model='user.password']").value,
       }
+    },
+
+    computed: {
+      validation: function() {
+        var user = this.user
+        return {
+          id: !!user.id.trim(),
+          password: !!user.password.trim()
+        }
+      },
+
+      isValid: function() {
+        var validation = this.validation
+        return Object.keys(validation).every(function (key) {
+          return validation[key]
+        })
+      },
     }
   })
 })

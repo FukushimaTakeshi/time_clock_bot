@@ -14,7 +14,7 @@
       <p>CHRONUSのユーザーIDとパスワードを登録してね。</p>
     </div>
   </div>
-  <div id="user-form" v-cloak>
+  <div id="user-form">
     <%= form_for(@user, url: update_signup_path) do |f| %>
 
       <div class="d-flex flex-column">
@@ -34,13 +34,22 @@
 
           <div class="input-field">
             <%= f.label :user_id %>
-            <%= f.text_field :user_id, placeholder: 'TIE999999', class: 'form-control', 'v-model' => 'user.id' %>
+            <%= f.text_field :user_id, placeholder: 'TIE999999', class: 'form-control', 'v-model': 'user.id' %>
+            <p v-show="!validation.id" class="text-danger">IDを入力して下さい</p>
 
             <%= f.label :password %>
-            <%= f.password_field :password, placeholder: '********', class: 'form-control', 'v-model' => 'user.password' %>
+            <%= f.password_field :password, placeholder: '********', class: 'form-control', 'v-model': 'user.password' %>
+            <p v-show="!validation.password" class="text-danger">パスワードを入力して下さい</p>
 
-            <div class="text-center">
+            <!-- <p>User name: {{ validation }}</p>
+            <span>Validation: {{ isValid == true }}</p> -->
+
+            <!-- TODO: disabledにisValidを渡す -->
+            <div v-if=isValid class="text-center">
               <%= f.submit "登 録", class: "btn btn-primary  btn-lg m-5 w-50" %>
+            </div>
+            <div v-else class="text-center">
+              <%= f.submit "登 録", class: "btn btn-primary  btn-lg m-5 w-50", disabled: true %>
             </div>
           </div>
         </form>
