@@ -13,6 +13,8 @@
 !/log/.keep
 !/tmp/.keep
 
+/db/*.sqlite3
+
 /node_modules
 /yarn-error.log
 
