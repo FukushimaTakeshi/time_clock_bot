@@ -77,7 +77,6 @@ module Bot
         end
       end
       Rails.cache.write(line_user_id, @memory, expired_in: 30.seconds)
-      # Redis.current.setex(line_user_id, 30, @memory.to_json)
       messages
     end
   end

@@ -13,6 +13,10 @@ gem 'jquery-rails'
 gem 'webpacker', github: 'rails/webpacker'
 gem 'foreman'
 
+gem 'capybara'
+gem 'poltergeist'
+gem 'holiday_jp'
+
 gem 'therubyracer', platforms: :ruby
 
 group :production do
