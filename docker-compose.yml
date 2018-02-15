@@ -1,4 +1,5 @@
 version: '3'
+
 services:
   # webpacker:
   #   build: .
@@ -24,6 +25,9 @@ services:
       - "3000:3000"
     # depends_on:
       # - webpacker
+
+  redis:
+    image: redis
 
 volumes:
   bundle_install:
