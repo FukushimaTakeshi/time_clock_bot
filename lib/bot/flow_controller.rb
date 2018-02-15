@@ -25,12 +25,14 @@ module Bot
         }
         # "First"
         # 初期状態 1.意図を抽出 2.slotを回収 3.すべてのslotを回収できれば最終解答、出来なければ確認メッセージ返答
+        p '----Firest Flow----'
         bot_flow = Bot::Flow::First.new(event, @memory)
         messages = bot_flow.run
 
       else
         # "Reply"
         # 確認中のslotがある状態 1.メッセージからslotを回収 2.すべてを回収できれば最終解答、出来なければ確認メッセージ返答
+        p '----Reply Flow----'
         if @memory[:confirming].present?
           bot_flow = Bot::Flow::Reply.new(event, @memory)
           messages = bot_flow.run
@@ -43,12 +45,14 @@ module Bot
             # Change intent
             # 一度、最終返答済みの状態から意図が変更された状態
             # Firstと同様だが、収集したパラメータを継承している
+            p '----Change Intent Flow----'
             bot_flow = Bot::Flow::First.new(event, @memory)
             messages = bot_flow.run
 
           else
             # "Change Slot"
             # 一度、最終返答済みの状態からslotが変更された状態
+            p '----Change Slot Flow----'
             if @memory[:verified][:confirmed].present?
               bot_flow = Bot::Flow::ChangeSlot.new(event, @memory)
               messages = bot_flow.run
@@ -65,6 +69,7 @@ module Bot
                   confirmed: []
                 }
               }
+              p '----Other Flow----'
               bot_flow = Bot::Flow::Other.new(event, @memory)
               messages = bot_flow.run
             end
