@@ -14,7 +14,7 @@ gem 'webpacker', github: 'rails/webpacker'
 gem 'foreman'
 
 gem 'capybara'
-gem 'poltergeist'
+gem 'poltergeist', require: 'capybara/poltergeist'
 gem 'holiday_jp'
 
 gem 'therubyracer', platforms: :ruby

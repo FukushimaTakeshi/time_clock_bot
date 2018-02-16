@@ -4,17 +4,17 @@ require 'capybara/dsl'
 require 'capybara/poltergeist'
 require 'holiday_jp'
 
-Capybara.configure do |config|
-  config.run_server = false
-  config.current_driver = :poltergeist
-  config.javascript_driver = :poltergeist
-  config.app_host = 'https://chronus-ext.tis.co.jp/Lysithea/JSP_Files/authentication/WC010_1.jsp'
-  config.default_wait_time = 5
-end
-
-Capybara.register_driver :poltergeist do |app|
-  Capybara::Poltergeist::Driver.new(app, { timeout: 120, js_errors: false })
-end
+# Capybara.configure do |config|
+#   config.run_server = false
+#   config.current_driver = :poltergeist
+#   config.javascript_driver = :poltergeist
+#   config.app_host = 'https://chronus-ext.tis.co.jp/Lysithea/JSP_Files/authentication/WC010_1.jsp'
+#   config.default_wait_time = 5
+# end
+#
+# Capybara.register_driver :poltergeist do |app|
+#   Capybara::Poltergeist::Driver.new(app, { timeout: 120, js_errors: false })
+# end
 
 class Register
   include Capybara::DSL
@@ -80,11 +80,13 @@ class Register
       type: 'text',
       text: 'test message'
     }
-    messages[:text] = regist_chronus
+    # User.find_by(id: memory[:])
+    
+    messages[:text] = regist_chronus(memory)
     messages
   end
 
-  def regist_chronus
+  def regist_chronus(memory)
     p '----regist chronus-----'
     login
     select_date
