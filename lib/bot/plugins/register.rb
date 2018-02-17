@@ -45,7 +45,9 @@ class Register
   NUMERICALITY_REGEX = /^[0-9０-９]{4}$/
 
   def parser_time(value)
-    return value.tr('０-９', '0-9') if value =~ NUMERICALITY_REGEX
+    value = value.delete(':').tr('０-９', '0-9')
+    return value[0, 4] if value.length == 6 && value[0, 4] =~ NUMERICALITY_REGEX
+    return value if value =~ NUMERICALITY_REGEX
     false
   end
 
@@ -80,6 +82,8 @@ class Register
               end
     logout
     message
+  rescue
+    "(´；ω；｀)!\n登録に失敗しました\nごめんなさい >_<;"
   end
 
   def login(user)
@@ -88,10 +92,10 @@ class Register
     find(:xpath, "//input[@class='InputTxtL'][@name='PersonCode']").set(user.user_id)
     find(:xpath, "//input[@class='InputTxtL'][@name='Password']").set(user.password)
     find(:xpath, "//*/a").click
+    page.accept_alert rescue p $! # パスワード切れの考慮
   end
 
   def select_date
-    page.accept_alert
     # frame name="MENU" の操作
     page.driver.within_frame('MENU') do
       # カレンダーから前営業日をクリック
