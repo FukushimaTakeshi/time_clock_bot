@@ -25,6 +25,10 @@ services:
       - "3000:3000"
     # depends_on:
       # - webpacker
+    links:
+      - redis
+    tty: true
+    stdin_open: true
 
   redis:
     image: redis

@@ -66,7 +66,7 @@ module Bot
           param = {}
           param[key.to_sym] = parsed_value
           @memory[:confirmed].merge!(param)
-          @memory[:verified][:confirmed] << key unless change_intent
+          # @memory[:verified][:confirmed] << key unless change_intent
           @memory[:to_confirme].delete(key.to_sym)
           @memory[:confirming] = nil if @memory[:confirming] == key
 
@@ -83,7 +83,7 @@ module Bot
         p '----create_message-------------'
         p @memory[:to_confirme].values[0]
         return collect_slot if @memory[:to_confirme].values[0].present?
-        @bot_plugin.create_message(@memory)
+        @bot_plugin.create_message(@line_event, @memory)
       end
     end
   end

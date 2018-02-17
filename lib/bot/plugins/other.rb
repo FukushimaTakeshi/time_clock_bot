@@ -1,6 +1,6 @@
-class Other_service
+class Other
 
-  def create_message(memory)
+  def create_message(_line_event, memory)
     messages = {
       type: 'text',
       text: memory[:intent][:fulfillment][:speech]

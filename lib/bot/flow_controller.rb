@@ -13,9 +13,9 @@ module Bot
       p @memory
 
       if @memory.blank?
-        parsed_intent = Bot::Flow::Base.parse_intent(event)
+        api_ai = Bot::Flow::Base.parse_intent(event)
         @memory = {
-          intent: parsed_intent[:result], # メッセージをDialogflowにpostし 抽出された意図 ex.'register' or 'show'
+          intent: api_ai[:result], # メッセージをDialogflowにpostし 抽出された意図 ex.'register' or 'show'
           confirmed: {}, # 確認済みのslot
           to_confirme: {}, # 確認するslot
           confirming: nil, # 現在確認中のslot
@@ -38,30 +38,31 @@ module Bot
           messages = bot_flow.run
 
         else
-          apiAi = Bot::Flow::Base.parse_intent(event)
-          if apiAi.dig(:result, :action) != 'input.unknown'
-            @memory[:intent] = apiAi[:result]
+          api_ai = Bot::Flow::Base.parse_intent(event)
+          if api_ai.dig(:result, :action) != 'input.unknown'
+            @memory[:intent] = api_ai[:result]
 
             # Change intent
             # 一度、最終返答済みの状態から意図が変更された状態
             # Firstと同様だが、収集したパラメータを継承している
             p '----Change Intent Flow----'
+            @memory[:confirmed] = {}
             bot_flow = Bot::Flow::First.new(event, @memory)
             messages = bot_flow.run
 
           else
             # "Change Slot"
             # 一度、最終返答済みの状態からslotが変更された状態
-            p '----Change Slot Flow----'
-            if @memory[:verified][:confirmed].present?
-              bot_flow = Bot::Flow::ChangeSlot.new(event, @memory)
-              messages = bot_flow.run
-
-            else
+            # p '----Change Slot Flow----'
+            # if @memory[:verified][:confirmed].present?
+            #   bot_flow = Bot::Flow::ChangeSlot.new(event, @memory)
+            #   messages = bot_flow.run
+            #
+            # else
               # "Other"
               # 一度、最終返答済みであが、上記のflowのどれにも当てはまらない場合
               @memory = {
-                intent: apiAi[:result],
+                intent: api_ai[:result],
                 confirmed: {},
                 to_confirme: {},
                 confirming: nil,
@@ -72,7 +73,7 @@ module Bot
               p '----Other Flow----'
               bot_flow = Bot::Flow::Other.new(event, @memory)
               messages = bot_flow.run
-            end
+            # end
           end
         end
       end
