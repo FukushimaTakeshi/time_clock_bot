@@ -12,13 +12,9 @@ module Bot
       end
 
       def bot_plugin(action)
-        p "bot_plugin action : #{action}"
-        p "../plugins/#{action}"
         return nil unless action
-
         action = 'other' if action == 'input.unknown'
         require "#{Rails.application.config.autoload_paths[0].to_s}/bot/plugins/#{action}.rb"
-        # classname = "#{action}"
         Object.const_get("#{action}".camelize).new
       end
 
@@ -43,9 +39,9 @@ module Bot
                end
 
         api_ai_ruby = ApiAiRuby::Client.new(
-            # client_access_token: ENV["APIAI_CLIENT_ACCESS_TOKEN"],
-            client_access_token: "64f4c041499b4fc5b83e6a8fab051426",
-            api_lang: 'ja'
+          # client_access_token: ENV["APIAI_CLIENT_ACCESS_TOKEN"],
+          client_access_token: "64f4c041499b4fc5b83e6a8fab051426",
+          api_lang: 'ja'
         )
         api_ai_ruby.text_request(text)
       end
@@ -54,22 +50,18 @@ module Bot
       def filtering_slot(key, value, change_intent = false)
         if @bot_plugin.required_slot.has_key?(key.to_sym)
           parsed_value = if @bot_plugin.respond_to?("parser_#{key}")
-                           # 'メソッドあり'
-                           @bot_plugin.send("parser_#{key}", value)
+                           @bot_plugin.send("parser_#{key}", value) # メソッドあり
                          else
-                           # 'メソッドなし'
-                           value
+                           value # メソッドなし
                          end
           return false unless parsed_value
 
-          p 'slot filtering'
           param = {}
           param[key.to_sym] = parsed_value
           @memory[:confirmed].merge!(param)
           # @memory[:verified][:confirmed] << key unless change_intent
           @memory[:to_confirme].delete(key.to_sym)
           @memory[:confirming] = nil if @memory[:confirming] == key
-
           true
         end
       end
@@ -80,8 +72,6 @@ module Bot
       end
 
       def create_message
-        p '----create_message-------------'
-        p @memory[:to_confirme].values[0]
         return collect_slot if @memory[:to_confirme].values[0].present?
         @bot_plugin.create_message(@line_event, @memory)
       end
