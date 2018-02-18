@@ -39,8 +39,8 @@ module Bot
                end
 
         api_ai_ruby = ApiAiRuby::Client.new(
-          # client_access_token: ENV["APIAI_CLIENT_ACCESS_TOKEN"],
-          client_access_token: "64f4c041499b4fc5b83e6a8fab051426",
+          client_access_token: ENV["APIAI_CLIENT_ACCESS_TOKEN"],
+          # client_access_token: "64f4c041499b4fc5b83e6a8fab051426",
           api_lang: 'ja'
         )
         api_ai_ruby.text_request(text)
@@ -49,15 +49,15 @@ module Bot
       # メッセージに含まれるslot(パラメータ)を抽出する
       def filtering_slot(key, value, change_intent = false)
         if @bot_plugin.required_slot.has_key?(key.to_sym)
-          parsed_value = if @bot_plugin.respond_to?("parser_#{key}")
+          parsed_slot = if @bot_plugin.respond_to?("parser_#{key}")
                            @bot_plugin.send("parser_#{key}", value) # メソッドあり
                          else
                            value # メソッドなし
                          end
-          return false unless parsed_value
+          return false unless parsed_slot
 
           param = {}
-          param[key.to_sym] = parsed_value
+          param[key.to_sym] = parsed_slot
           @memory[:confirmed].merge!(param)
           # @memory[:verified][:confirmed] << key unless change_intent
           @memory[:to_confirme].delete(key.to_sym)

@@ -17,7 +17,8 @@ gem 'capybara'
 gem 'poltergeist', require: 'capybara/poltergeist'
 gem 'holiday_jp'
 
-gem 'therubyracer', platforms: :ruby
+gem 'uglifier', '>= 1.3.0'
+# gem 'therubyracer', platforms: :ruby
 
 group :production do
   gem 'pg', '0.18.4'
