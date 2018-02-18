@@ -1,7 +1,7 @@
 require 'line/bot'
 
 class ApplicationController < ActionController::Base
-  protect_from_forgery with: :null_session
+  protect_from_forgery with: :exception
 
   unless Rails.env.development?
     rescue_from StandardError, with: :render_404

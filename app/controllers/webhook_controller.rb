@@ -1,4 +1,5 @@
 class WebhookController < ApplicationController
+  protect_from_forgery except: :callback
 
   def callback
     event = client.parse_events_from(request.body.read)[0]
