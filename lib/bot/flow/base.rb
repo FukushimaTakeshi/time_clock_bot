@@ -14,7 +14,7 @@ module Bot
       def bot_plugin(action)
         return nil unless action
         action = 'other' if action == 'input.unknown'
-        require "#{Rails.application.config.autoload_paths[0].to_s}/bot/plugins/#{action}.rb"
+        require "#{Rails.root.join('lib/bot/plugins/')}#{action}.rb"
         Object.const_get("#{action}".camelize).new
       end
 
