@@ -2,30 +2,31 @@ class WebhookController < ApplicationController
 
   def callback
     event = client.parse_events_from(request.body.read)[0]
+    logger.info(event)
     line_user_id = event['source']['userId']
 
     case event
     when Line::Bot::Event::Follow
-      # ユーザ登録
+      # LINEユーザ登録
       follow(line_user_id).create
     when Line::Bot::Event::Unfollow
-      # ユーザ削除
+      # LINEユーザ削除
       unfollow(line_user_id).delete
     else
-      # 登録flow
       user = User.find_by(line_user_id: line_user_id)
-      if  user.nil?
-        follow(line_user_id).create
-        return 'OK'
-      elsif user.user_id.blank? || user.password.blank?
-        p '新規登録'
+      return follow(line_user_id).create if user.nil? # LINEユーザ登録
+
+      if user.user_id.blank? || user.password.blank?
+        # 勤怠ユーザ登録
         messages = user_activation_message(line_user_id)
       else
-        p '登録済み'
+        # LINEユーザ & 勤怠ユーザ登録済み
+        # flowの実行
         messages = bot(line_user_id).flow(event)
       end
     end
-    client.reply_message(event['replyToken'], messages)
+    response = client.reply_message(event['replyToken'], messages)
+    logger.info(response)
   end
 
   def reminder
@@ -41,8 +42,9 @@ class WebhookController < ApplicationController
         ]
       }
     }
-    user = User.pluck(:line_user_id).uniq
-    client.multicast(user, message)
+    users = User.pluck(:line_user_id).uniq
+    response = client.multicast(users, message)
+    logger.info(response)
   end
 
   private
@@ -71,7 +73,7 @@ class WebhookController < ApplicationController
     p edit_account_activation_url(user.activation_token, id: line_user_id)
     {
       type: 'text',
-      text: "このURLからユーザー登録して下さい\n#{edit_account_activation_url(user.activation_token, id: line_user_id)}"
+      text: "こちらのURLからユーザー登録して下さい\n#{edit_account_activation_url(user.activation_token, id: line_user_id)}"
     }
   end
 end
