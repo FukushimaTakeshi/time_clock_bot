@@ -1,7 +1,15 @@
 <div class="pt-5 pb-5">
+  <% flash.each do |message_type, message| %>
+    <%= content_tag(:div, message, class: "alert alert-#{message_type} mt-3") %>
+  <% end %>
   <div class="text-center md-5">
     <h3 class="pt-4">あなたの代わりにくろのす登録するよ</h3>
     <h4 class="pt-4">LINEからお友達になってね</h4>
     <img src="https://qr-official.line.me/M/EEg3H61-Er.png" class="img-responsive img-thumbnail">
+    <div class="mt-3">
+      <a href="https://line.me/R/ti/p/%40xgj9445y">
+        <img height="45" border="0" alt="友だち追加" src="https://scdn.line-apps.com/n/line_add_friends/btn/ja.png">
+      </a>
+    </div>
   <div>
 </div>

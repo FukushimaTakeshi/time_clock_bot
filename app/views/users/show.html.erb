@@ -1,11 +1,17 @@
-<% provide(:title, @user.line_display_name) %>
-<div class="row">
-  <aside class="col-md-4">
-    <section class="user_info">
-      <h1>
-        <%= @user.line_display_name %>
-      </h1>
-    </section>
-  </aside>
-</div>
+<div class="pt-5 pb-5">
+  <% flash.each do |message_type, message| %>
+    <%= content_tag(:div, message, class: "alert alert-#{message_type} mt-3") %>
+  <% end %>
+  <div class="p-3 pt-4">
+    <h2>こんちは</h2>
+  </div>
+  <div class="alert alert-info p-3" role="alert">
+    <h4 class="alert-heading">
+      <%= @user.line_display_name %> さん
+    </h4>
+    <hr>
+    <div>
+      <p>こんちは! こんちは!<br/>勤怠入力はLINEからコメントしてね。</p>
+    </div>
+  </div>
 </div>
