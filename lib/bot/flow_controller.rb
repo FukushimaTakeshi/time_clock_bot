@@ -8,7 +8,6 @@ module Bot
 
     def flow(event)
       @memory ||= Rails.cache.read(line_user_id)
-      # @memory ||= JSON.parse(Redis.current.get(line_user_id), symbolize_names: true) rescue nil
       p '----------memory-----------'
       p @memory
 
@@ -77,7 +76,7 @@ module Bot
           end
         end
       end
-      Rails.cache.write(line_user_id, @memory, expired_in: 30.seconds)
+      Rails.cache.write(line_user_id, @memory)
       messages
     end
   end
