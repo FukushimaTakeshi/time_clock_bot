@@ -82,8 +82,9 @@ class Register
               end
     logout
     message
-  rescue
-    "(´；ω；｀)!\n登録に失敗しました\nごめんなさい >_<;"
+  rescue => e
+    Rails.logger.error("#{e.class} (#{e.message}):\n#{e.backtrace.join("\n")}")
+    "(´；ω；｀)\n登録に失敗しました\nごめんなさい >_<;"
   end
 
   def login(user)
