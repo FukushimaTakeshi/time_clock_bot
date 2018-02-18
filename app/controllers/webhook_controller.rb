@@ -30,6 +30,7 @@ class WebhookController < ApplicationController
   end
 
   def reminder
+    return unless business_day?
     message = {
       type: 'template',
       altText: '前日の勤怠を登録しますか？',
@@ -75,5 +76,10 @@ class WebhookController < ApplicationController
       type: 'text',
       text: "こちらのURLからユーザー登録して下さい\n#{edit_account_activation_url(user.activation_token, id: line_user_id)}"
     }
+  end
+
+  def business_day?
+    today = Date.today
+    return unless today.wday == 6 || today.wday == 0 || HolidayJp.holiday?(today)
   end
 end
