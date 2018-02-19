@@ -31,9 +31,7 @@ class WebhookController < ApplicationController
   end
 
   def reminder
-    # return unless business_day?
-    p business_day?
-    p Date.today
+    return unless business_day?
     message = {
       type: 'template',
       altText: '前日の勤怠を登録しますか？',
@@ -83,6 +81,6 @@ class WebhookController < ApplicationController
 
   def business_day?
     today = Date.today
-    return unless today.wday == 6 || today.wday == 0 || HolidayJp.holiday?(today)
+    !(today.wday == 6 || today.wday == 0 || HolidayJp.holiday?(today).present?)
   end
 end
