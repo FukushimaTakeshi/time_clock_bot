@@ -83,7 +83,7 @@ class Register
     logout
     message
   rescue => e
-    Rails.logger.error("#{e.class} (#{e.message}):\n#{e.backtrace.join("\n")}\n#{memoty}")
+    Rails.logger.error("#{e.class} (#{e.message}):\n#{e.backtrace.join("\n")}\n#{memory}")
     "(´；ω；｀)\n登録に失敗しました\nごめんなさい >_<;"
   end
 
