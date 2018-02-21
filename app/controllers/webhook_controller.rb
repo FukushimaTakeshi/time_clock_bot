@@ -75,7 +75,7 @@ class WebhookController < ApplicationController
     p edit_account_activation_url(user.activation_token, id: line_user_id)
     {
       type: 'text',
-      text: "こちらのURLからユーザー登録して下さい\n#{edit_account_activation_url(user.activation_token, id: line_user_id)}"
+      text: "こちらのURLからユーザー登録して下さい\n#{edit_account_activation_url(user.activation_token, id: line_user_id, openExternalBrowser: '1')}"
     }
   end
 
