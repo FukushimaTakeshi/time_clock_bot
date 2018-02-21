@@ -28,11 +28,6 @@ class User < ApplicationRecord
     BCrypt::Password.new(digest).is_password?(token)
   end
 
-  # ユーザーのログイン情報を破棄する
-  def forget
-    update_attribute(:remember_digest, nil)
-  end
-
   # アカウントを有効にする
   def activate
     update_columns(activated: true, activated_at: Time.zone.now)
@@ -49,5 +44,3 @@ class User < ApplicationRecord
     update_columns(line_display_name: line_display_name)
   end
 end
-
-# Base64.urlsafe_encode64(BCrypt::Password.create('U11dcf2ab1d8608c6ae6c837d5255cf1f'))

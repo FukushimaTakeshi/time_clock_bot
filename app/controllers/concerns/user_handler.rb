@@ -36,7 +36,6 @@ module UserHandler
 
   def logged_in_user
     unless logged_in?
-      store_location
       flash[:danger] = "Please log in."
       redirect_to root_url
       # TODO: LINEからもう一度登録用URLを発行する
@@ -47,11 +46,6 @@ module UserHandler
     !current_user.nil?
   end
 
-  # アクセスしようとしたURLを覚えておく
-  def store_location
-    session[:forwarding_url] = request.original_url if request.get?
-  end
-
   def log_in(user)
     session[:user_id] = user.id
   end
@@ -60,5 +54,11 @@ module UserHandler
     user.remember
     cookies.permanent.signed[:user_id] = user.id
     cookies.permanent[:remember_token] = user.remember_token
+  end
+
+  #  永続的セッションを破棄する
+  def forget
+    cookies.delete(:user_id)
+    cookies.delete(:remember_token)
   end
 end
