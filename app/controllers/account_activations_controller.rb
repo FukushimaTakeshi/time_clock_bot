@@ -3,7 +3,9 @@ class AccountActivationsController < ApplicationController
 
   def edit
     user = User.find_by(line_user_id: params[:id])
-    if user && !user.activated? && user.authenticated?(:activation, params[:token])
+    # TODO: URLプレビューでリクエストされる対策...
+    # if user && !user.activated? && user.authenticated?(:activation, params[:token])
+    if user && user.authenticated?(:activation, params[:token])
       user.activate
       remember(user)
       log_in user

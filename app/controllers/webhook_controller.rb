@@ -72,10 +72,9 @@ class WebhookController < ApplicationController
       contact = JSON.parse(response.body)
       user.update_line_display_name(contact['displayName'])
     end
-    p edit_account_activation_url(user.activation_token, id: line_user_id)
     {
       type: 'text',
-      text: "こちらのURLからユーザー登録して下さい\n「#{edit_account_activation_url(user.activation_token, id: line_user_id, openExternalBrowser: '1')}　」"
+      text: "こちらのURLからユーザー登録して下さい\n#{edit_account_activation_url(user.activation_token, id: line_user_id)}"
     }
   end
 
