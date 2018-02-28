@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'feed_back/show'
+
+  get 'feed_back/create'
+
   post '/callback', to: 'webhook#callback'
 
   root 'static_pages#home'
