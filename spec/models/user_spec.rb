@@ -14,10 +14,21 @@ RSpec.describe User, type: :model do
       context '空の場合' do
         let(:user_id) { '' }
         it { is_expected.to_not be_valid(:update) }
+        it 'error message' do
+          user.valid?(:update)
+          expect(user.errors.messages[:user_id]).to match [
+            include("can't be blank"),
+            include("is the wrong length (should be 9 characters)")
+          ]
+        end
       end
-      context '長さ境界値超の場合' do
+      context '9桁未満の場合' do
         let(:user_id) { 'a' * 8 }
         it { is_expected.to_not be_valid(:update) }
+        it 'error message' do
+          user.valid?(:update)
+          expect(user.errors.messages[:user_id]).to include("is the wrong length (should be 9 characters)")
+        end
       end
     end
 
@@ -25,6 +36,10 @@ RSpec.describe User, type: :model do
       context '空の場合' do
         let(:password) { '' }
         it { is_expected.to_not be_valid(:update) }
+        it 'error message' do
+          user.valid?(:update)
+          expect(user.errors.messages[:password]).to include("can't be blank")
+        end
       end
     end
 
