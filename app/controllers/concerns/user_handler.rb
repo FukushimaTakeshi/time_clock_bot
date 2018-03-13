@@ -6,13 +6,6 @@ module UserHandler
     helper_method :current_user
   end
 
-  def user_params
-    params.require(:user).permit(
-      :user_id,
-      :password
-    )
-  end
-
   # 渡されたユーザーがログイン済みユーザーであればtrueを返す
   def current_user?(user)
     user == current_user
