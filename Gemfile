@@ -31,6 +31,7 @@ group :development, :test do
   gem 'binding_of_caller'
   gem 'rspec-rails'
   gem 'rails-controller-testing'
+  gem 'webmock', require: false
 end
 
 group :development do
