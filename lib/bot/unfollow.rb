@@ -6,7 +6,6 @@ module Bot
 
     def delete
       user = User.find_by(line_user_id: @line_user_id)
-      p user
       user.destroy
     end
   end
