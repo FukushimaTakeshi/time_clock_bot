@@ -7,6 +7,13 @@
 # Ignore bundler config.
 /.bundle
 
+# Ignore bundler gems.
+vendor/bundle
+
+# these should all be checked in to normalize the environment:
+.ruby-version
+.ruby-gemset
+
 # Ignore all logfiles and tempfiles.
 /log/*
 /tmp/*
