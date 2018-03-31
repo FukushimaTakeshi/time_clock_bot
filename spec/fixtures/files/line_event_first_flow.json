@@ -1,0 +1,36 @@
+{
+  "events": [
+    {
+      "type": "message",
+      "replyToken": "9a68727b1ee34d84a7c1323549dc2cce",
+      "source": {
+        "userId": "U11dcf2ab1d8608c6a",
+        "type": "user"
+      },
+      "timestamp": 1521286274866,
+      "message": {
+        "type": "text",
+        "id": "7639986520165",
+        "text": "登録する"
+      }
+    }
+  ],
+  "webhook": {
+    "events": [
+      {
+        "type": "message",
+        "replyToken": "9a68727b1ee34d84a7c1323549dc2cce",
+        "source": {
+          "userId": "U11dcf2ab1d8608c6a",
+          "type": "user"
+        },
+        "timestamp": 1521286274866,
+        "message": {
+          "type": "text",
+          "id": "7639986520165",
+          "text": "登録する"
+        }
+      }
+    ]
+  }
+}

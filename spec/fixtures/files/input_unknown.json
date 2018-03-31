@@ -1,0 +1,35 @@
+{
+  "id": "8b9e356f-d602-483f-900e-2b43de3e2d3d",
+  "timestamp": "2018-03-31T12:47:25.608Z",
+  "lang": "ja",
+  "result": {
+    "source": "agent",
+    "resolvedQuery": "testtest",
+    "action": "input.unknown",
+    "actionIncomplete": false,
+    "parameters": {},
+    "contexts": [],
+    "metadata": {
+      "intentId": "126de40d-d346-4e5b-99df-504fec359d8c",
+      "webhookUsed": "false",
+      "webhookForSlotFillingUsed": "false",
+      "intentName": "Default Fallback Intent"
+    },
+    "fulfillment": {
+      "speech": "今のは少しわかりにくかったです。",
+      "messages": [
+        {
+          "type": 0,
+          "speech": "今、なんておっしゃいましたか？"
+        }
+      ]
+    },
+    "score": 1
+  },
+  "status": {
+    "code": 200,
+    "errorType": "success",
+    "webhookTimedOut": false
+  },
+  "sessionId": "e5bd0cc8-8257-4ade-a67b-2d8644926c8c"
+}
