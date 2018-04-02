@@ -40,7 +40,6 @@ module Bot
 
         api_ai_ruby = ApiAiRuby::Client.new(
           client_access_token: ENV["APIAI_CLIENT_ACCESS_TOKEN"],
-          # client_access_token: "64f4c041499b4fc5b83e6a8fab051426",
           api_lang: 'ja'
         )
         api_ai_ruby.text_request(text)

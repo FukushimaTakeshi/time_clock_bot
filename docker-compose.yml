@@ -29,6 +29,10 @@ services:
       - redis
     tty: true
     stdin_open: true
+    environment:
+      - APIAI_CLIENT_ACCESS_TOKEN=
+      - LINE_CHANNEL_SECRET=
+      - LINE_CHANNEL_TOKEN=
 
   redis:
     image: redis
